@@ -1,4 +1,7 @@
 h3 MAIN HERE HI
 ul
   - @temps.each do |t|
-    li = t.temperature
+    li
+      span = t.temperature
+      |,
+      span< = t.created_at
