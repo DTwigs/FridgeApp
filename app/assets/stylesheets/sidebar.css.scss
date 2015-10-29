@@ -1,0 +1,43 @@
+.sidebar {
+  display: inline-block;
+  background-color: #3D4142;
+  width: 29%;
+  height: 100%;
+  vertical-align: top;
+  margin: 0;
+}
+
+.header-logo {
+  width: 70%;
+  margin: 15px 15%;
+}
+
+.sidebar-body {
+  margin: 1.5rem 0 0;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: 25%;
+    width: 50%;
+    height: 2px;
+    background-color: $color-darkblack;
+  }
+}
+
+.sidebar-button {
+  width: 100%;
+  height: 50px;
+  padding: 15px 15%;
+  font-weight: bold;
+  color: $color-offwhite;
+  background-color: transparent;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $color-darkblack;
+    color: $color-brand;
+  }
+}

@@ -7,6 +7,15 @@ html
     = csrf_meta_tags
 
   body
-    h3 HIIII
-    = yield
+    .sidebar
+      .sidebar-header
+        img.header-logo src="/fridgemonit-white.png"
+      .sidebar-body
+        .sidebar-button
+          | Fridge Temperature
+        .sidebar-button
+          | Danger Zones
+
+    .content
+      = yield
 

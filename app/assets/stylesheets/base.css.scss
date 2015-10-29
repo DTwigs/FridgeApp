@@ -1,0 +1,30 @@
+@import "normalize";
+
+* {
+  @include box-sizing('border-box');
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.5rem;
+  color: $color-black;
+  background-color: $color-offwhite;
+}
+
+.content {
+  display: inline-block;
+  width: 70%;
+  padding: 45px;
+  vertical-align: top;
+  margin: 0;
+}
