@@ -1,19 +1,31 @@
 class TemperatureRetriever
   STD_TIME_INTERVAL = 10
 
-  def get_temps(start_date, end_date, add_gaps = true)
-    temps = []
-    if end_date.nil?
-      temps = Temperature.where("created_at >= ?", start_date).order('created_at ASC')
+  def initialize(start_date, end_date)
+    if start_date.present? && start_date.is_a?(String)
+      @start_date = DateTime.parse(start_date)
     else
-      temps = Temperature.where(:created_at => start_date..end_date).order('created_at ASC')
+      @start_date = start_date
+    end
+
+    if end_date.present? && end_date.is_a?(String)
+      @end_date = DateTime.parse(end_date)
+    else
+      @end_date = end_date
+    end
+  end
+
+  def get_temps(add_gaps = true)
+    temps = []
+    if @end_date.nil?
+      temps = Temperature.where("created_at >= ?", @start_date).order('created_at ASC')
+    else
+      temps = Temperature.where(:created_at => @start_date..@end_date).order('created_at ASC')
     end
     add_gaps ? fill_in_gaps(temps) : temps
   end
 
-  def get_minute_difference(temp1, temp2)
-    time1 = temp1.created_at
-    time2 = temp2.created_at
+  def get_minute_difference(time1, time2)
     ((time2 - time1) / 60).to_i
   end
 
@@ -29,25 +41,31 @@ class TemperatureRetriever
   # TODO: Handle situation when no data at end of time span
   def fill_in_gaps(temps)
     filled_in = []
-    last_temp = nil
-
+    last_time = @start_date
 
     temps.each do |t|
-      if last_temp.nil?
-        filled_in.push(t)
-      else
-        min_diff = get_minute_difference(last_temp, t)
-        # Add in a record that represents a time gap
-        if min_diff > (STD_TIME_INTERVAL * 1.5)
-          gap = create_time_gap(min_diff, last_temp.created_at)
-          filled_in.push(gap)
-        end
-        filled_in.push(t)
-      end
-      last_temp = t
+      gap = add_gap(Time.parse(last_time.to_s), t.created_at)
+      filled_in.push(gap) unless gap.nil?
+      filled_in.push(t)
+      last_time = t.created_at
     end
 
+    #Add time gap at end of date range
+    end_time = @end_date || Time.now
+    t_last = temps.last
+    gap = add_gap(t_last.created_at, Time.parse(end_time.to_s))
+    filled_in.push(gap) unless gap.nil?
     filled_in
+  end
+
+  def add_gap(time1, time2)
+    gap = nil
+    min_diff = get_minute_difference(time1, time2)
+    # Add in a record that represents a time gap
+    if min_diff > (STD_TIME_INTERVAL * 1.5)
+      gap = create_time_gap(min_diff, time1)
+    end
+    gap
   end
 end
 
