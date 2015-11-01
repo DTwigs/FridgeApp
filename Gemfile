@@ -9,13 +9,13 @@ gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails'
+gem 'react-rails', '~> 1.4.1'
 gem 'compass'
 gem 'compass-rails'
 gem 'breakpoint' # must be listed AFTER compass
 gem 'compass-normalize', '~> 1.5'
 gem 'slim-rails'
 
-gem 'angularjs-rails', '~> 1.3.4'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
