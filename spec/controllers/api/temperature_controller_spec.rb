@@ -27,7 +27,6 @@ describe Api::TemperatureController do
   end
 
   context 'failed api calls' do
-
     before do
       allow_any_instance_of(::TemperatureRetriever).to receive(:get_temps) { temperature_data }
     end
@@ -45,9 +44,5 @@ describe Api::TemperatureController do
       e = JSON.parse(response.body)
       expect(e).to eql({"success" => false, "error" => "invalid date", "status" => "forbidden"})
     end
-
   end
-
-
-
 end
