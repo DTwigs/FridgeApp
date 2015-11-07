@@ -11,7 +11,7 @@ class TemperatureRetriever
     if end_date.present? && end_date.is_a?(String)
       @end_date = DateTime.parse(end_date)
     else
-      @end_date = end_date
+      @end_date = DateTime.now
     end
   end
 
@@ -22,7 +22,27 @@ class TemperatureRetriever
     else
       temps = Temperature.where(:created_at => @start_date..@end_date).order('created_at ASC')
     end
-    add_gaps ? fill_in_gaps(temps) : temps
+    build_temps_by_day(temps)
+  end
+
+  def build_temps_by_day(temps)
+    temps_by_day = {}
+    total_range = @start_date.beginning_of_day..@end_date.end_of_day
+
+    total_range.each do |date|
+      range = date.beginning_of_day..date.end_of_day
+      temps_found = []
+      temps.each do |temp|
+        # require 'pry';binding.pry
+        if range.cover?(temp.created_at.to_datetime) 
+          temps_found.push(temp)
+        end
+      end
+      key = date.strftime('%Y-%m-%d')
+      temps_by_day[key] = temps_found
+    end
+    temps_by_day
+    # add_gaps ? fill_in_gaps(temps, s, e) : temps
   end
 
   def get_minute_difference(time1, time2)
@@ -39,9 +59,9 @@ class TemperatureRetriever
   # TODO: Add specs
   # TODO: Handle situation when no data at beginning of time span
   # TODO: Handle situation when no data at end of time span
-  def fill_in_gaps(temps)
+  def fill_in_gaps(temps, start_date, end_date)
     filled_in = []
-    last_time = @start_date
+    last_time = start_date
 
     temps.each do |t|
       gap = add_gap(Time.parse(last_time.to_s), t.created_at)
@@ -51,7 +71,7 @@ class TemperatureRetriever
     end
 
     #Add time gap at end of date range
-    end_time = @end_date || Time.now
+    end_time = end_date || Time.now
     t_last = temps.last
     gap = add_gap(t_last.created_at, Time.parse(end_time.to_s))
     filled_in.push(gap) unless gap.nil?
