@@ -28,12 +28,11 @@ class TemperatureRetriever
   def build_temps_by_day(temps, add_gaps = true)
     temps_by_day = {}
     total_range = @start_date.beginning_of_day..@end_date.end_of_day
-
     total_range.each do |date|
       range = date.beginning_of_day..date.end_of_day
       temps_found = []
       temps.each do |temp|
-        if range.cover?(temp.created_at.to_datetime) 
+        if range.cover?(temp.created_at.to_datetime)
           temps_found.push(temp)
         end
       end
