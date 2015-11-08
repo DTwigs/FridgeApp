@@ -1,5 +1,8 @@
 h1 Fridge Temperature
-ul
-  = @temps
 
-#example
+= @temps
+#graph-box
+
+javascript:
+  var initialTempData = #{raw @temps};
+
