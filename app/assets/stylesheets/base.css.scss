@@ -17,14 +17,17 @@ html {
 
 body {
   font-size: 1.5rem;
-  color: $color-black;
-  background-color: $color-offwhite;
+  background-color: $color-black;
+
 }
 
 .content {
+  color: $color-black;
   display: inline-block;
   width: 70%;
+  height: 100%;
   padding: 45px;
   vertical-align: top;
   margin: 0;
+  background-color: $color-offwhite;
 }
