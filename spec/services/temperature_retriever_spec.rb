@@ -4,7 +4,7 @@ describe TemperatureRetriever do
 
   describe "#get_temps" do
     context 'no gaps filled' do
-      let(:temp1) { Temperature.create(temperature: 35, created_at: "2015-10-04 00:00:00 -0800") }
+      let(:temp1) { Temperature.create(temperature: 35, created_at: "2015-10-05 00:00:00 -0800") }
       let(:temp2) { Temperature.create(temperature: 39, created_at: "2015-10-04 00:00:00 -0800") }
       let(:temp3) { Temperature.create(temperature: 42, created_at: "2015-10-03 00:00:00 -0800") }
       let(:temp4) { Temperature.create(temperature: 32, created_at: "2015-10-02 00:00:00 -0800") }
