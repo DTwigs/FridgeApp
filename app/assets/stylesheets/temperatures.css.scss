@@ -1,0 +1,39 @@
+.date-item {
+  margin: 25px 0;
+}
+
+.temperature-list {
+  padding: 0;
+  margin: 10px 0 0;
+  list-style-type: none;
+}
+
+.temperature-item, .gap-item {
+  display: inline-block;
+  height: 50px;
+  width: 5px;
+  overflow: hidden;
+  margin: 0 2px;
+}
+
+.gap-item {
+  background-color: $color-grayscale-3;
+}
+
+.temperature-item {
+  &.temperature-blue {
+    background-color: $color-brand;
+  }
+
+  &.temperature-green {
+    background-color: $color-tertiary-5;
+  }
+
+  &.temperature-orange {
+    background-color: $color-tertiary-2;
+  }
+
+  &.temperature-red {
+    background-color: $color-tertiary-8;
+  }
+}

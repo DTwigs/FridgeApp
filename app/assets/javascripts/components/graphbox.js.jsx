@@ -34,13 +34,12 @@ var GraphBox = React.createClass({
     return { data: initialTempData };
   },
   componentDidMount: function() {
-    setInterval(this.loadDataFromServer, this.props.pollInterval);
+    // setInterval(this.loadDataFromServer, this.props.pollInterval);
   },
   render: function() {
     return (
       <div className="graph-box">
         <h1>Graph Box</h1>
-        {JSON.stringify(this.state.data)}
         <DateList data={this.state.data}/>
       </div>
     );

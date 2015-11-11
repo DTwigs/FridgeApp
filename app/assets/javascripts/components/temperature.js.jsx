@@ -1,10 +1,10 @@
 var TemperatureItem = React.createClass({
   render: function() {
+    var tempClass = fridgeApp.getTemperatureItemClass(this.props.temperature);
     return (
-      <div className="temperature-item">
-        <h5>Temperature </h5>
-        Hello, world! I am a temp item
-      </div>
+      <li className={tempClass}>
+        {this.props.temperature},
+      </li>
     );
   }
 });
