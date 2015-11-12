@@ -39,7 +39,7 @@ class TemperatureRetriever
       key = date.strftime('%Y-%m-%d')
       s = range.cover?(@start_date) ? @start_date : date.beginning_of_day
       e = range.cover?(@end_date) ? @end_date : date.end_of_day
-      temps_by_day[key] = add_gaps ? fill_in_gaps(temps_found, s, e) : temps_found
+      temps_by_day[key] = temps_found #add_gaps ? fill_in_gaps(temps_found, s, e) : temps_found
     end
     temps_by_day
   end

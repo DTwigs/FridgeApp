@@ -1,11 +1,12 @@
 var DateItem = React.createClass({
-  // componentDidMount: function() {
-  //   var tempData = this.props.temperatures,
-  //     date = this.props.date;
-  //   this.timedTemps = fridgeApp.getTimeIntervalTemps(date, tempData);
-  // },
+  componentDidMount: function() {
+    var tempData = this.props.temperatures,
+      date = this.props.date;
+    this.timedTemps = fridgeApp.getTimeIntervalTemps(date, tempData);
+  },
   render: function() {
-    var tempNodes = this.props.temperatures.map(function(temp) {
+    var timedTemps = fridgeApp.getTimeIntervalTemps(this.props.date, this.props.temperatures),
+      tempNodes = timedTemps.map(function(temp) {
       if (temp.hasOwnProperty("gap")) {
         return (
           <GapItem key={temp.created_at} time={temp.created_at} gap={temp.gap} />
