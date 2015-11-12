@@ -1,6 +1,4 @@
-var fridgeApp = {
-  TIME_INTERVAL: 10
-};
+var fridgeApp = {};
 
 fridgeApp.getTemperatureItemClass = function(temperature) {
   var color = "";
@@ -18,42 +16,91 @@ fridgeApp.getTemperatureItemClass = function(temperature) {
   return "temperature-item temperature-" + color;
 }
 
-fridgeApp.getTimeIntervalTemps = function(date, temperatures) {
+fridgeApp.interval = {
+  TIME_INTERVAL: 10,
+  list: [],
+  temperatures: []
+};
+
+// Step through the given date by 10 minutes intervals and
+// see if a temperature has been recorded during that interval
+// Create an array of these 10 minute intervals with the associated temperature data
+fridgeApp.interval.getTemps = function(date, temperatures) {
+  fridgeApp.interval.list = [];
+  fridgeApp.interval.temperatures = temperatures;
+  fridgeApp.interval.createArray(date);
+  fridgeApp.interval.addTemperatures(fridgeApp.interval.list);
+  return fridgeApp.interval.list;
+}
+
+fridgeApp.interval.createArray = function(date) {
   var startDate = moment(date).startOf('day'),
     endDate = moment(date).endOf('day'),
-    intervalTemps = [];
-
+    TIME_INTERVAL = fridgeApp.interval.TIME_INTERVAL;
 
   if (endDate > moment()) {
-    endDate = moment();
+    endDate = moment().add(TIME_INTERVAL - 1, 'm');
   }
 
-  // Each iteration represents a 10 minute interval of time
   while (startDate < endDate) {
+    startDate.add(TIME_INTERVAL, 'm');
 
-    var temporary = [];
-    startDate.add(10, 'm'); // now start date is 10 minutes ahead of previous start date
-
-    // Loop through all of the temperatures from the DB
-    for (var i = 0; i < temperatures.length; i++) {
-      var time = moment(temperatures[i].created_at);
-
-      if (time < startDate) {
-        temporary.push(temperatures[i]);
-        // Remove the temperature from the original array
-        temperatures.splice(i, 1);
-        // Step back an index so as not to skip over any items in the temperatures array
-        i--;
+    fridgeApp.interval.list.push(
+      {
+        interval: startDate.format("YYYY-MM-DD h:mm:ss a"),
+        temperature: { gap: TIME_INTERVAL, created_at: startDate.format("YYYY-MM-DD h:mm:ss a") }
       }
-    }
-
-    // If no temperatures found, add a gap
-    if (temporary.length <= 0) {
-      temporary = [{ gap: 10, created_at: startDate.format("dddd, MMMM Do YYYY, h:mm:ss a") }]
-    }
-    // Push the last item from the temporary array into the final interval Temps array
-    intervalTemps.push(temporary[temporary.length - 1]);
+    );
   }
 
-  return intervalTemps;
+  return fridgeApp.interval.list;
 }
+
+fridgeApp.interval.addTemperatures = function() {
+  var objs = fridgeApp.interval.list,
+    temp;
+
+  if (fridgeApp.interval.temperatures.length <= 0) {
+    return;
+  }
+
+  for (var i = 0; i < objs.length; i++) {
+    if (temp = fridgeApp.interval.findTemperatures(objs[i])) {
+      objs[i].temperature = temp;
+    }
+  }
+
+  fridgeApp.interval.list = objs;
+}
+
+fridgeApp.interval.findTemperatures = function(intervalObj) {
+  var temps = fridgeApp.interval.temperatures,
+    chosenTemp = false,
+    intervalTime = moment(intervalObj.interval);
+
+  for (var i = 0; i < temps.length; i++) {
+    var time = moment(temps[i].created_at);
+
+    if (time < intervalTime) {
+      chosenTemp = temps[i];
+      // Remove the temperature from the original array
+      temps.splice(i, 1);
+      // Step back an index so as not to skip over any items in the temperatures array
+      i--;
+    }
+  }
+
+  return chosenTemp;
+}
+
+// fridgeApp.appendNewData = function(newData, currentData) {
+//   var key = newData["temps"];
+
+//   for (var key in newData["temps"]) {
+//     if (currentData.hasOwnProperty(key)) {
+//       currentData[key]
+//     }
+//   }
+
+//   return currentData;
+// }

@@ -3,7 +3,6 @@ var TemperatureItem = React.createClass({
     var tempClass = fridgeApp.getTemperatureItemClass(this.props.temperature);
     return (
       <li className={tempClass}>
-        {this.props.temperature},
       </li>
     );
   }

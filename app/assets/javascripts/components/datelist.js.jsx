@@ -4,12 +4,11 @@ var DateList = React.createClass({
 
     var dateNodes = [];
     for(var key in this.props.data) {
-      dateNodes.push( <DateItem key={key} date={key} temperatures={this.props.data[key]}/> )
+      dateNodes.push( <DateItem key={key} date={key} intervals={this.props.data[key]}/> )
     }
 
     return (
       <div className="date-list">
-        <h2>Date List</h2>
         {dateNodes.reverse()}
       </div>
     );

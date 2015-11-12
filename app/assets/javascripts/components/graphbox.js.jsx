@@ -5,32 +5,21 @@ var GraphBox = React.createClass({
       data: {start_date: this.lastPollTime},
       dataType: 'json',
       success: function(newData) {
+        var fullData;
         this.lastPollTime = new Date();
-        this.setState({data: this.appendData(newData)});
+        fullData = fridgeApp.appendNewData(newData, this.state.data);
+        this.setState({data: fullData});
       }.bind(this),
       error: function(xhr, status, err) {
         console.error(this.props.url, status, err.toString());
       }.bind(this)
     });
   },
-  appendData: function(newData) {
-    var key = newData["temps"],
-      self = this;
-
-    for (var key in newData["temps"]) {
-      if (this.state.data.hasOwnProperty(key)) {
-        newData["temps"][key].forEach(function(item) {
-          self.state.data[key].push(item);
-        })
-      } else {
-        this.state.data[key] = newData["temps"][key];
-      }
-    }
-
-    return this.state.data;
-  },
   getInitialState: function() {
     this.lastPollTime = new Date();
+    for (var key in initialTempData) {
+      initialTempData[key] = fridgeApp.interval.getTemps(key, initialTempData[key])
+    }
     return { data: initialTempData };
   },
   componentDidMount: function() {
@@ -39,7 +28,6 @@ var GraphBox = React.createClass({
   render: function() {
     return (
       <div className="graph-box">
-        <h1>Graph Box</h1>
         <DateList data={this.state.data}/>
       </div>
     );
