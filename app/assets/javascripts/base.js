@@ -39,7 +39,7 @@ fridgeApp.interval.createArray = function(date) {
     TIME_INTERVAL = fridgeApp.interval.TIME_INTERVAL;
 
   if (endDate > moment()) {
-    endDate = moment().add(TIME_INTERVAL - 1, 'm');
+    endDate = moment().add(1, 'm');
   }
 
   while (startDate < endDate) {

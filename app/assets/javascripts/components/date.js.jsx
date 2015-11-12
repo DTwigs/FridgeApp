@@ -15,7 +15,7 @@ var DateItem = React.createClass({
 
     return (
       <div className="date-item">
-        <h3>Date: {this.props.date}</h3>
+        <div className="date-title">{this.props.date}</div>
         <ul className="temperature-list">
           {tempNodes}
         </ul>
