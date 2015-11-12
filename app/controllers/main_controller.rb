@@ -4,4 +4,5 @@ class MainController < ApplicationController
     temp_ret = TemperatureRetriever.new(start_date, nil)
     @temps = temp_ret.get_temps.to_json
   end
+
 end
