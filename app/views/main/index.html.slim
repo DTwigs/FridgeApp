@@ -4,17 +4,20 @@ ul.timeline
     li.timeline-item
 
   .timeline-position.zero
-    | 12:00 PM
+    | 12:00 AM
   .timeline-position.six
     | 6:00 AM
   .timeline-position.noon
-    | 12:00 AM
+    | 12:00 PM
   .timeline-position.sixp
     | 6:00 PM
   .timeline-position.midnight
-    | 12:00 PM
+    | 12:00 AM
 #graph-box
 
 javascript:
   var initialTempData = #{raw @temps};
 
+- content_for(:js_lower) do
+  javascript:
+    fridgeApp.bindEvents();

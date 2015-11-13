@@ -55,6 +55,7 @@
 .date-title {
   font-size: 1.2rem;
   margin: 5px 0;
+  display: inline-block;
 }
 
 .date-item {
@@ -65,16 +66,28 @@
   padding: 0;
   margin: 10px 0 0;
   list-style-type: none;
+
+  &.has-bar-toggled {
+    .temperature-item, .gap-item {
+      height: 100px;
+    }
+
+    .temperature-bar {
+      opacity: 1;
+    }
+  }
 }
 
 .temperature-item, .gap-item {
   display: inline-block;
   height: 50px;
   width: .69%;
+
+  @include single-transition(height, .2s);
 }
 
 .gap-item {
-  background-color: $color-black;
+  background-color: $color-grayscale-1;
 }
 
 .temperature-infobox {
@@ -141,4 +154,15 @@
       display: block;
     }
   }
+}
+
+.temperature-bar {
+  opacity: 0;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: $color-black;
+  z-index: 2;
+
+  @include single-transition(opacity, .2s);
 }

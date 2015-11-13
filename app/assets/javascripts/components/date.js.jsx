@@ -15,7 +15,12 @@ var DateItem = React.createClass({
 
     return (
       <div className="date-item">
-        <div className="date-title">{this.props.date}</div>
+        <div className="date-title">{moment(this.props.date).format("MMM Do YYYY")}</div>
+        <div className="toggle-button-text js-bar-toggle pull-right">
+          <div className="toggle-icon">+</div>
+          <div className="toggle-icon-toggled">-</div>
+          View As Bar Graph
+        </div>
         <ul className="temperature-list">
           {tempNodes}
         </ul>

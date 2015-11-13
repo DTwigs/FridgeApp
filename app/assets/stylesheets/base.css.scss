@@ -30,3 +30,64 @@ body {
   margin: 0;
   background-color: $color-offwhite;
 }
+
+.pull-right {
+  float: right;
+}
+
+.toggle-button {
+  position: relative;
+  right: 0;
+  height: 44px;
+  width: 120px;
+  line-height: 2.5;
+  font-weight: bold;
+  font-size: 1.1rem;
+
+  border: 1px solid $color-brand;
+  background-color: transparent;
+  border-radius: 5px;
+  text-align: center;
+  color: $color-black;
+  cursor: pointer;
+
+  .toggled {
+    background-color: $color-brand;
+    color: $color-white;
+  }
+}
+
+.toggle-button-text {
+  font-weight: bold;
+  font-size: 1.1rem;
+
+  color: $color-black;
+  cursor: pointer;
+
+  &.is-toggled, &:hover {
+    color: $color-brand;
+  }
+
+  &.is-toggled {
+    .toggle-icon-toggled {
+      display: inline-block;
+    }
+
+    .toggle-icon {
+      display: none;
+    }
+  }
+
+  .toggle-icon, .toggle-icon-toggled {
+    font-size: 1.5rem;
+    padding: 0 5px;
+  }
+
+  .toggle-icon {
+    display: inline-block;
+  }
+
+  .toggle-icon-toggled {
+    display: none;
+  }
+}

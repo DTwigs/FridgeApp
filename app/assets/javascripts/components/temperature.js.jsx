@@ -1,6 +1,7 @@
 var TemperatureItem = React.createClass({
   render: function() {
-    var tempClass = fridgeApp.getTemperatureItemClass(this.props.temperature);
+    var tempClass = fridgeApp.getTemperatureItemClass(this.props.temperature),
+      barHeight = fridgeApp.getBarHeightString(this.props.temperature);
     return (
       <li className={tempClass}>
         <div className="temperature-infobox">
@@ -8,7 +9,7 @@ var TemperatureItem = React.createClass({
           <span className="temperature-created">{moment(this.props.created).format("h:mm A")}</span>
           <div className="temperature-infobox-triangle"></div>
         </div>
-
+        <div className="temperature-bar" style={barHeight}></div>
       </li>
     );
   }

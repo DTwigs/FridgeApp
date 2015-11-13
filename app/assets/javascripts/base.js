@@ -1,5 +1,17 @@
 var fridgeApp = {};
 
+fridgeApp.bindEvents = function() {
+  $(document).ready(function() {
+    $('.toggle-button-text').on('click', function(e) {
+      $(this).toggleClass('is-toggled');
+    });
+
+    $('.js-bar-toggle').on('click', function(e) {
+      $(this).parent().find('.temperature-list').toggleClass('has-bar-toggled');
+    });
+  });
+}
+
 fridgeApp.getTemperatureItemClass = function(temperature) {
   var color = "";
 
@@ -14,6 +26,20 @@ fridgeApp.getTemperatureItemClass = function(temperature) {
   }
 
   return "temperature-item temperature-" + color;
+}
+
+fridgeApp.getBarHeightString = function(temperature) {
+  var heightPerCent = 0;
+
+  if (temperature >= 45) {
+    heightPerCent = 100;
+  } else if (temperature <= 25) {
+    heightPerCent = 5;
+  } else {
+    heightPerCent = (temperature - 24) * 5;
+  }
+
+  return {height: heightPerCent.toString() + "%"};
 }
 
 fridgeApp.interval = {
