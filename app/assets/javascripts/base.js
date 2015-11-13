@@ -39,7 +39,7 @@ fridgeApp.getBarHeightString = function(temperature) {
     heightPerCent = (temperature - 24) * 5;
   }
 
-  return {height: heightPerCent.toString() + "%"};
+  return {height: (100 - heightPerCent).toString() + "%"};
 }
 
 fridgeApp.interval = {

@@ -69,25 +69,25 @@
 
   &.has-bar-toggled {
     .temperature-item, .gap-item {
-      height: 100px;
+      // height: 100px;
     }
 
     .temperature-bar {
-      opacity: 1;
+      max-height: 100%;
     }
   }
 }
 
 .temperature-item, .gap-item {
   display: inline-block;
-  height: 50px;
+  height: 75px;
   width: .69%;
 
   @include single-transition(height, .2s);
 }
 
 .gap-item {
-  background-color: $color-grayscale-1;
+  background-color: $color-grayscale-0;
 }
 
 .temperature-infobox {
@@ -157,12 +157,12 @@
 }
 
 .temperature-bar {
-  opacity: 0;
+  max-height: 0%;
   position: absolute;
-  bottom: 0;
+  top: 0;
   width: 100%;
-  background-color: $color-black;
+  background-color: $color-grayscale-0;
   z-index: 2;
 
-  @include single-transition(opacity, .2s);
+  @include transition(max-height 0.3s ease-in-out);
 }
