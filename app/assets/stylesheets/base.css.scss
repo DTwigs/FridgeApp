@@ -23,12 +23,20 @@ body {
 .content {
   color: $color-black;
   display: inline-block;
-  width: 70%;
+  width: 85%;
   min-height: 100%;
   padding: 45px;
   vertical-align: top;
   margin: 0;
   background-color: $color-offwhite;
+
+  @include breakpoint($ty-screen) {
+    width: 90%;
+  }
+
+  @include breakpoint($sm-screen) {
+    width: 70%;
+  }
 }
 
 .pull-right {

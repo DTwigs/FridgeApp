@@ -8,12 +8,19 @@ html
   body
     .sidebar
       .sidebar-header
-        img.header-logo src="/fridgemonit-white.png"
+        .header-logo
       .sidebar-body
+        .sidebar-button.is-active
+          i.icon-thermometer
+          span.sidebar-button-text Fridge Temperature
+
         .sidebar-button
-          | Fridge Temperature
+          i.icon-flash
+          span.sidebar-button-text Danger Zones
+
         .sidebar-button
-          | Danger Zones
+          i.icon-cog
+          span.sidebar-button-text Settings
 
     .content
       = yield
