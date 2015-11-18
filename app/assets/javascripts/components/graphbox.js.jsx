@@ -1,33 +1,52 @@
 var GraphBox = React.createClass({
-  loadDataFromServer: function() {
+  loadDataFromServer: function(dateParams, isPolling) {
+    isPolling = isPolling || false;
     $.ajax({
       url: this.props.url,
-      data: {start_date: this.lastPollTime},
+      data: dateParams,
       dataType: 'json',
       success: function(newData) {
         var fullData;
         this.lastPollTime = new Date();
-        fullData = fridgeApp.appendNewData(newData, this.state.data);
+        if (isPolling) {
+          // fullData = fridgeApp.appendNewData(newData, this.state.data);
+        } else {
+          fullData = this.parseServerData(newData.temps);
+        }
+        console.log(fullData);
         this.setState({data: fullData});
+
       }.bind(this),
       error: function(xhr, status, err) {
         console.error(this.props.url, status, err.toString());
       }.bind(this)
     });
   },
+  pollServerForNewest: function() {
+    this.loadDataFromServer({start_date: this.lastPollTime}, true);
+  },
+  handlePickerSubmit: function(dateParams) {
+    this.loadDataFromServer(dateParams);
+  },
+  parseServerData: function(data) {
+    for (var key in data) {
+      data[key] = fridgeApp.interval.getTemps(key, data[key]);
+    }
+    return data;
+  },
   getInitialState: function() {
     this.lastPollTime = new Date();
-    for (var key in initialTempData) {
-      initialTempData[key] = fridgeApp.interval.getTemps(key, initialTempData[key])
-    }
+    initialTempData = this.parseServerData(initialTempData);
+    console.log(initialTempData)
     return { data: initialTempData };
   },
   componentDidMount: function() {
-    // setInterval(this.loadDataFromServer, this.props.pollInterval);
+    // setInterval(this.pollServerForNewest, this.props.pollInterval);
   },
   render: function() {
     return (
       <div className="graph-box">
+        <DatePicker onPickerSubmit={this.handlePickerSubmit}/>
         <DateList data={this.state.data}/>
       </div>
     );

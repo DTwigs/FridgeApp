@@ -6,16 +6,18 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-temps = Temperature.create([{temperature: 32, created_at: DateTime.now.advance(minutes: -5)},
-  {temperature: 33, created_at: DateTime.now.advance(minutes: -10)},
-  {temperature: 35, created_at: DateTime.now.advance(minutes: -15)},
-  {temperature: 37, created_at: DateTime.now.advance(minutes: -20)},
-  {temperature: 39, created_at: DateTime.now.advance(minutes: -25)},
-  {temperature: 42, created_at: DateTime.now.advance(minutes: -30)},
-  {temperature: 45, created_at: DateTime.now.advance(minutes: -35)},
-  {temperature: 45, created_at: DateTime.now.advance(minutes: -40)},
-  {temperature: 45, created_at: DateTime.now.advance(minutes: -45)},
-  {temperature: 45, created_at: DateTime.now.advance(minutes: -50)},
-  {temperature: 42, created_at: DateTime.now.advance(minutes: -55)},
-  {temperature: 38, created_at: DateTime.now.advance(minutes: -60)},
-  {temperature: 35, created_at: DateTime.now.advance(minutes: -65)}])
+def get_rand(num)
+  num = 30 if num <= 29
+  num = 45 if num >= 46
+
+  rand((num-1)..(num+1))
+end
+
+minutes = 10
+temp_rand = rand(29..46)
+
+while minutes <= 7200 do
+  temp_rand = get_rand(temp_rand)
+  Temperature.create({temperature: temp_rand, created_at: DateTime.now.advance(minutes: -(minutes))})
+  minutes += 10
+end

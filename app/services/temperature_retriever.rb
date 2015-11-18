@@ -11,7 +11,7 @@ class TemperatureRetriever
     if end_date.present? && end_date.is_a?(String)
       @end_date = DateTime.parse(end_date)
     else
-      @end_date = DateTime.now
+      @end_date = end_date.is_a?(DateTime) ? end_date : DateTime.now
     end
   end
 

@@ -7,7 +7,8 @@ fridgeApp.bindEvents = function() {
     });
 
     $('.js-bar-toggle').on('click', function(e) {
-      $(this).parent().find('.temperature-list').toggleClass('has-bar-toggled');
+      tempList = $(this).siblings('.temperature-list');
+      tempList.toggleClass('has-bar-toggled');
     });
   });
 }

@@ -1,0 +1,37 @@
+input[type="text"] {
+  height: 36px;
+  padding: 0 8px;
+  margin: 0 25px 0 0;
+}
+
+.date-picker-container {
+  margin: 20px 0 0;
+  padding: 10px 25px;
+  border: 1px solid $color-grayscale-1;
+  background-color: $color-offwhite;
+}
+
+.button {
+  padding: 0 10px;
+  height: 36px;
+  width: auto;
+  display: inline-block;
+  font-size: 1.2rem;
+  font-weight: bold;
+  -webkit-appearance: none;
+  border: none;
+  vertical-align: middle;
+  border-radius: 5px;
+
+  background-color: $color-brand;
+  color: $color-white;
+
+  &:focus { outline: 0; }
+  &:hover {
+    background-color: $color-brand-dark;
+  }
+
+  &.right {
+    float: right;
+  }
+}
