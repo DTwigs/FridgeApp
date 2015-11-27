@@ -1,7 +1,6 @@
 class Message
   def initialize(body)
     @body = body
-    @phone_number = phone_number
   end
 
   def send_text_message
