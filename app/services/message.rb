@@ -1,6 +1,7 @@
 class Message
-  def initialize(body)
+  def initialize(body, phone_number)
     @body = body
+    @phone_number = phone_number
   end
 
   def send_text_message
@@ -10,7 +11,7 @@ class Message
 
     @twilio_client.account.messages.create(
       :from => "+1#{twilio_phone_number}",
-      :to => "8607481627",
+      :to => phone_number,
       :body => @body
     )
   end
