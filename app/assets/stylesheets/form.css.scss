@@ -1,20 +1,59 @@
 input[type="text"] {
   height: 36px;
   padding: 0 8px;
-  margin: 0 25px 0 0;
+}
+
+.input-inline {
+  display: inline-block;
+  margin: 0 6% 0 0;
+  width: 47%;
+  -webkit-appearance: none;
+  border: 0;
+  border-radius: 2px;
+
+  &:nth-child(even) {
+    margin: 0 0 1%;
+  }
 }
 
 .date-picker-container {
-  margin: 20px 0 0;
   padding: 10px 25px;
-  border: 1px solid $color-grayscale-1;
-  background-color: $color-offwhite;
+  max-width: 350px;
+  margin: 0 auto;
+  background-color: $color-brand;
+}
+
+.date-picker-title {
+  margin: 10px 0 20px;
+  font-weight: bold;
+  color: $color-offwhite;
+  letter-spacing: 0.6px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  i {
+    font-size: 1.8rem;
+    color: $color-black;
+    margin: 0 15px 0 0;
+    vertical-align: middle;
+  }
+
+  @include breakpoint($sm-screen $md-screen) {
+    font-size: 1.2rem;
+
+    i {
+      font-size: 1.5rem;
+      margin: 0 10px 0 0;
+    }
+  }
 }
 
 .button {
   padding: 0 10px;
   height: 36px;
-  width: auto;
+  width: 100%;
   display: inline-block;
   font-size: 1.2rem;
   font-weight: bold;
@@ -33,5 +72,14 @@ input[type="text"] {
 
   &.right {
     float: right;
+  }
+
+  &.secondary {
+    background-color: $color-black;
+    color: $color-white;
+
+    &:hover {
+      background-color: $color-darkblack;
+    }
   }
 }

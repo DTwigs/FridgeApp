@@ -1,10 +1,11 @@
 .sidebar {
+  position: fixed;
+  top: 0;
   background-color: #3D4142;
   width: 15%;
   height: 100%;
   vertical-align: top;
   margin: 0;
-  float: left;
 
   @include breakpoint($ty-screen) {
     width: 10%;
@@ -12,6 +13,28 @@
 
   @include breakpoint($sm-screen) {
     width: 30%;
+  }
+
+  @include breakpoint($lg-screen) {
+    width: 20%;
+  }
+}
+
+.sidebar-extender-overlay {
+  position: absolute;
+  display: block;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  cursor: pointer;
+
+  @include breakpoint($sm-screen) {
+    display: none;
+  }
+
+  @at-root .body-container.is-expanded .sidebar-extender-overlay {
+    display: none;
   }
 }
 
@@ -27,6 +50,18 @@
     height: 140px;
     background-size: 100% 100%;
   }
+
+  @at-root .body-container.is-expanded .header-logo {
+    @include breakpoint(0 $sm-screen) {
+      width: 50%;
+      margin: 5px 25%;
+      background-size: 100% 100%;
+
+      @include single-transition(all, .6s);
+    }
+  }
+
+  @include single-transition(all, .4s, .2s);
 }
 
 .sidebar-body {
@@ -44,8 +79,9 @@
   }
 }
 
-.sidebar-button {
+a.sidebar-button, .sidebar-button {
   position: relative;
+  display: block;
   width: 100%;
   height: 50px;
   padding: 15px 15%;
@@ -100,12 +136,83 @@
       text-align: center;
     }
   }
+
+  @at-root .body-container.is-expanded .sidebar-button i {
+    @include breakpoint(0 $sm-screen) {
+      display: inline-block;
+      text-align: left;
+      width: auto;
+    }
+  }
 }
 
 .sidebar-button-text {
-  display: none;
+  font-size: 0;
+  opacity: 0;
+  white-space: nowrap;
+  overflow: hidden;
 
   @include breakpoint($sm-screen) {
-    display: inline;
+    font-size: 1rem;
+    opacity: 1;
+  }
+
+  @include breakpoint($md-screen) {
+    font-size: 1.5rem;
+  }
+
+  @at-root .body-container.is-expanded .sidebar-button-text {
+    @include breakpoint(0 $sm-screen) {
+      font-size: 1.5rem;
+      opacity: 1;
+      @include single-transition(opacity, .6s, .4s);
+    }
   }
 }
+
+.sidebar-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 15%;
+
+  @include single-transition(width, .6s);
+
+  @include breakpoint($ty-screen) {
+    width: 10%;
+  }
+
+  @include breakpoint($sm-screen) {
+    width: 30%;
+    background-color: $color-brand;
+
+    .sidebar-button {
+      display: none;
+    }
+  }
+
+  @include breakpoint($lg-screen) {
+    width: 20%;
+  }
+
+  @at-root .body-container.is-expanded .sidebar-footer {
+    @include breakpoint(0 $sm-screen) {
+      width: 72%;
+    }
+  }
+}
+
+.sidebar-footer-button-container {
+  width: 100%;
+  margin: 10px 0;
+}
+
+.sidebar-form {
+  display: none;
+  overflow: hidden;
+
+  @include breakpoint($sm-screen) {
+    display: block;
+  }
+}
+

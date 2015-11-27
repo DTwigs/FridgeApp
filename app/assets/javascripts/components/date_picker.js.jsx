@@ -7,7 +7,8 @@ var DatePicker = React.createClass({
     if (!endDate || !startDate) {
       return;
     }
-    this.props.onPickerSubmit({start_date: startDate, end_date: endDate});
+    $(document).trigger({type: 'FridgeApp::UpdateDateRange', dateParams: {start_date: startDate, end_date: endDate}});
+    // this.props.onPickerSubmit({start_date: startDate, end_date: endDate});
     this.refs.startDate.value = '';
     this.refs.endDate.value = '';
     return;
@@ -15,9 +16,19 @@ var DatePicker = React.createClass({
   render: function() {
     return (
       <form className="date-picker-container" onSubmit={this.handleSubmit}>
-        <input placeholder="Start Date" type="text" ref="startDate" />
-        <input placeholder="End Date" type="text" ref="endDate" />
-        <button type="submit" className="button right"> Filter By Date Range</button>
+        <div className="date-picker-title">
+          <i className="icon-air"/>
+          Change Date Range
+        </div>
+        <div>
+          <input className="input-inline" placeholder="Start Date" type="text" ref="startDate" />
+          <input className="input-inline" placeholder="End Date" type="text" ref="endDate" />
+        </div>
+        <div className="sidebar-footer-button-container">
+          <button type="submit" className="button secondary js-filter-submit">
+            Filter By Date Range
+          </button>
+        </div>
       </form>
     );
   }

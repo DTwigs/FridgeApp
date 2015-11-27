@@ -25,9 +25,6 @@ var GraphBox = React.createClass({
   pollServerForNewest: function() {
     this.loadDataFromServer({start_date: this.lastPollTime}, true);
   },
-  handlePickerSubmit: function(dateParams) {
-    this.loadDataFromServer(dateParams);
-  },
   parseServerData: function(data) {
     for (var key in data) {
       data[key] = fridgeApp.interval.getTemps(key, data[key]);
@@ -41,12 +38,15 @@ var GraphBox = React.createClass({
     return { data: initialTempData };
   },
   componentDidMount: function() {
+    var self = this;
+    $(document).on('FridgeApp::UpdateDateRange', function(e) {
+      self.loadDataFromServer(e.dateParams);
+    });
     // setInterval(this.pollServerForNewest, this.props.pollInterval);
   },
   render: function() {
     return (
       <div className="graph-box">
-        <DatePicker onPickerSubmit={this.handlePickerSubmit}/>
         <DateList data={this.state.data}/>
       </div>
     );

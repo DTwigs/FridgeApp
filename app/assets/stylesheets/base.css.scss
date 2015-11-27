@@ -20,14 +20,43 @@ body {
   background-color: $color-black;
 }
 
+a {
+  text-decoration: none;
+}
+
+.body-container {
+  width: 100%;
+
+  @include single-transition(width, .6s);
+
+  @include breakpoint(0 $sm-screen) {
+    &.is-expanded {
+      width: 180%;
+
+      .sidebar {
+        width: 72%;
+      }
+
+      .content {
+        width: 60%;
+      }
+    }
+  }
+
+  .sidebar, .content {
+    @include single-transition(width, .6s);
+  }
+}
+
 .content {
-  color: $color-black;
   display: inline-block;
+  float: right;
   width: 85%;
   min-height: 100%;
   padding: 45px;
   vertical-align: top;
   margin: 0;
+  color: $color-black;
   background-color: $color-offwhite;
 
   @include breakpoint($ty-screen) {
@@ -36,6 +65,10 @@ body {
 
   @include breakpoint($sm-screen) {
     width: 70%;
+  }
+
+  @include breakpoint($lg-screen) {
+    width: 80%;
   }
 }
 
@@ -99,3 +132,41 @@ body {
     display: none;
   }
 }
+
+.overlay-filters {
+  display: none;
+  background-color: $color-brand;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+
+  &.is-visible {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    opacity: .95;
+  }
+}
+
+.overlay-filters-close {
+  position: absolute;
+  bottom: 20px;
+  padding: 15px 0;
+  width: 100%;
+  font-size: 1.8rem;
+  color: $color-black;
+  text-align: center;
+  cursor: pointer;
+  font-weight: bold;
+  letter-spacing: 0.6px;
+
+  i {
+    position: relative;
+    top: -1px;
+    font-size: 2.2rem;
+    vertical-align: middle;
+    color: $color-tertiary-8;
+  }
+}
+

@@ -6,24 +6,39 @@ html
     = csrf_meta_tags
 
   body
-    .sidebar
-      .sidebar-header
-        .header-logo
-      .sidebar-body
-        .sidebar-button.is-active
-          i.icon-thermometer
-          span.sidebar-button-text Fridge Temperature
+    .body-container
+      .sidebar
+        .sidebar-extender-overlay
+        .sidebar-header
+          .header-logo
+        .sidebar-body
+          a.sidebar-button.is-active href="/"
+            i.icon-thermometer
+            span.sidebar-button-text Fridge Temperature
 
-        .sidebar-button
-          i.icon-flash
-          span.sidebar-button-text Danger Zones
+          a.sidebar-button href="/"
+            i.icon-flash
+            span.sidebar-button-text Danger Zones
 
-        .sidebar-button
-          i.icon-cog
-          span.sidebar-button-text Settings
+          .sidebar-button
+            i.icon-cog
+            span.sidebar-button-text Settings
 
-    .content
-      = yield
+        .sidebar-footer
+          .sidebar-button.js-change-filter
+            i.icon-air
+            span.sidebar-button-text Change Filter
+
+          #sidebar-form.sidebar-form
+
+      .content
+        = yield
+
+      .overlay-filters
+        #overlay-date-form
+        .overlay-filters-close
+          i.icon-cross
+          | Close Filters
 
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = yield(:js_lower)

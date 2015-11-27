@@ -10,6 +10,24 @@ fridgeApp.bindEvents = function() {
       tempList = $(this).siblings('.temperature-list');
       tempList.toggleClass('has-bar-toggled');
     });
+
+    $('.sidebar-extender-overlay').on('click', function(e) {
+      e.stopPropagation();
+      e.preventDefault();
+      $('.body-container').addClass('is-expanded');
+
+      $('.sidebar').one('click', function(e) {
+        $('.body-container').removeClass('is-expanded');
+      });
+    });
+
+    $('.js-change-filter').on('click', function(e) {
+      $('.overlay-filters').addClass('is-visible');
+    });
+
+    $('.js-filter-submit, .overlay-filters-close').on('click', function(e) {
+      $('.overlay-filters').removeClass('is-visible');
+    });
   });
 }
 
