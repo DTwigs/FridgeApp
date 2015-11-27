@@ -1,5 +1,5 @@
 class Message
-  def initialize(body, phone_number)
+  def initialize(body)
     @body = body
     @phone_number = phone_number
   end
@@ -11,7 +11,7 @@ class Message
 
     @twilio_client.account.messages.create(
       :from => "+1#{twilio_phone_number}",
-      :to => phone_number,
+      :to => ENV["MESSAGE_TO_NUMBER"],
       :body => @body
     )
   end
