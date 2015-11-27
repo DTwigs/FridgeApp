@@ -15,6 +15,8 @@ gem 'compass-rails'
 gem 'breakpoint' # must be listed AFTER compass
 gem 'compass-normalize', '~> 1.5'
 gem 'slim-rails'
+gem 'rest-client'
+gem 'twilio-ruby'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -41,6 +43,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   gem 'rspec-rails'
+  gem 'dotenv-rails'
 end
 
 group :development do
