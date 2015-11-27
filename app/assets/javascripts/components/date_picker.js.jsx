@@ -7,8 +7,15 @@ var DatePicker = React.createClass({
     if (!endDate || !startDate) {
       return;
     }
+
+    // convert dates to string representing the beginning and end of each day
+    startDate = moment(startDate).startOf('day').format("YYYY-MM-DD HH:mm:ss");
+    endDate = moment(endDate).endOf('day').format("YYYY-MM-DD HH:mm:ss");
+
+    // trigger an event that will tell the graphbox component to fetch data.
     $(document).trigger({type: 'FridgeApp::UpdateDateRange', dateParams: {start_date: startDate, end_date: endDate}});
-    // this.props.onPickerSubmit({start_date: startDate, end_date: endDate});
+
+    // clear form values
     this.refs.startDate.value = '';
     this.refs.endDate.value = '';
     return;
