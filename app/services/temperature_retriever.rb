@@ -13,6 +13,9 @@ class TemperatureRetriever
     else
       @end_date = end_date.is_a?(DateTime) ? end_date : DateTime.now
     end
+
+    @start_date = set_pacific_time(@start_date)
+    @end_date = set_pacific_time(@end_date) if @end_date.present?
   end
 
   def get_temps(add_gaps = true)
@@ -85,6 +88,12 @@ class TemperatureRetriever
       gap = create_time_gap(min_diff, time1)
     end
     gap
+  end
+
+  private
+
+  def set_pacific_time(date)
+    date.change(offset: "-800")
   end
 end
 
