@@ -4,9 +4,7 @@ input[type="text"] {
 }
 
 .input-inline {
-  display: inline-block;
-  margin: 0 6% 0 0;
-  width: 47%;
+  width: 100%;
   -webkit-appearance: none;
   border: 0;
   border-radius: 2px;
@@ -81,5 +79,16 @@ input[type="text"] {
     &:hover {
       background-color: $color-darkblack;
     }
+  }
+}
+
+.datepicker__input-container {
+  position: relative;
+  width: 47%;
+  display: inline-block;
+  margin: 0 6% 0 0;
+
+  &:nth-child(even) {
+    margin: 0 0 1%;
   }
 }

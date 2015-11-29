@@ -4,11 +4,11 @@ ReactDOM.render(
 );
 
 ReactDOM.render(
-  <DatePicker/>,
+  <DatePickerForm/>,
   document.getElementById('sidebar-form')
 );
 
 ReactDOM.render(
-  <DatePicker/>,
+  <DatePickerForm/>,
   document.getElementById('overlay-date-form')
 );

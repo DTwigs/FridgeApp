@@ -1,24 +1,41 @@
-var DatePicker = React.createClass({
+// var DatePicker = require('react-datepicker');
+
+// require('react-datepicker/dist/react-datepicker.css');
+
+var DatePickerForm = React.createClass({
+  getInitialState: function() {
+    return {
+      startDate: moment().subtract(4, 'days'),
+      endDate: moment(),
+    };
+  },
   handleSubmit: function(e) {
     e.preventDefault();
-    var startDate = this.refs.startDate.value.trim();
-    var endDate = this.refs.endDate.value.trim();
+    var startDate = this.state.startDate;
+    var endDate = this.state.endDate;
 
     if (!endDate || !startDate) {
       return;
     }
 
     // convert dates to string representing the beginning and end of each day
-    startDate = moment(startDate).startOf('day').format("YYYY-MM-DD HH:mm:ss");
-    endDate = moment(endDate).endOf('day').format("YYYY-MM-DD HH:mm:ss");
+    startDate = startDate.startOf('day').format("YYYY-MM-DD HH:mm:ss");
+    endDate = endDate.endOf('day').format("YYYY-MM-DD HH:mm:ss");
 
     // trigger an event that will tell the graphbox component to fetch data.
     $(document).trigger({type: 'FridgeApp::UpdateDateRange', dateParams: {start_date: startDate, end_date: endDate}});
 
-    // clear form values
-    this.refs.startDate.value = '';
-    this.refs.endDate.value = '';
     return;
+  },
+  handleStartChange: function(date) {
+    this.setState({
+      startDate: date
+    });
+  },
+  handleEndChange: function(date) {
+    this.setState({
+      endDate: date
+    });
   },
   render: function() {
     return (
@@ -28,8 +45,16 @@ var DatePicker = React.createClass({
           Change Date Range
         </div>
         <div>
-          <input className="input-inline" placeholder="Start Date" type="text" ref="startDate" />
-          <input className="input-inline" placeholder="End Date" type="text" ref="endDate" />
+          <DatePicker
+            selected={this.state.startDate}
+            onChange={this.handleStartChange}
+            maxDate={this.state.endDate}
+            className="input-inline"> </DatePicker>
+          <DatePicker
+            selected={this.state.endDate}
+            onChange={this.handleEndChange}
+            minDate={this.state.startDate}
+            className="input-inline"> </DatePicker>
         </div>
         <div className="sidebar-footer-button-container">
           <button type="submit" className="button secondary js-filter-submit">
