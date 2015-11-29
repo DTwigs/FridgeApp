@@ -2,6 +2,8 @@ require 'rails_helper'
 
 describe TempChecker do
   describe ".check_temps" do
+    let(:test_message) { double(Message, 'body=' => "", body: "", send_text_message: true) }
+
     context 'temperatures are too high' do
       let(:temp1) { Temperature.create(temperature: 41, created_at: (DateTime.now - 30.minutes)) }
       let(:temp2) { Temperature.create(temperature: 44, created_at: (DateTime.now - 20.minutes)) }
@@ -12,10 +14,31 @@ describe TempChecker do
         temp1;temp2;temp3;temp4
       end
       it 'sends a text message if temperatures are too high in past half hour' do
-        test_message = Message.new(" ")
         tc = TempChecker.new(test_message)
         expect(test_message).to receive(:send_text_message)
         tc.perform
+      end
+      it 'sends the correct message if temperatures are too high' do
+        message = Message.new("")
+        tc = TempChecker.new(message)
+        allow_any_instance_of(Message).to receive(:send_text_message) {true}
+        tc.perform
+        expect(message.body).to eq("Temperature is too high")
+      end
+    end
+
+    context 'no data' do
+      it 'sends a text message if there is no data from past half hour' do
+        tc = TempChecker.new(test_message)
+        expect(test_message).to receive(:send_text_message)
+        tc.perform
+      end
+      it 'sends the correct message if there is no data' do
+        message = Message.new("")
+        tc = TempChecker.new(message)
+        allow_any_instance_of(Message).to receive(:send_text_message) {true}
+        tc.perform
+        expect(message.body).to eq("Not enough data in your database")
       end
     end
   end
