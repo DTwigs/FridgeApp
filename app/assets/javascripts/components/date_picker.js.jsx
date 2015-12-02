@@ -54,6 +54,7 @@ var DatePickerForm = React.createClass({
             selected={this.state.endDate}
             onChange={this.handleEndChange}
             minDate={this.state.startDate}
+            maxDate={moment()}
             className="input-inline"> </DatePicker>
         </div>
         <div className="sidebar-footer-button-container">

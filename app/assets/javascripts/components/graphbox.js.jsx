@@ -9,11 +9,10 @@ var GraphBox = React.createClass({
         var fullData;
         this.lastPollTime = new Date();
         if (isPolling) {
-          // fullData = fridgeApp.appendNewData(newData, this.state.data);
+          fullData = fridgeApp.appendNewData(newData, this.state.data);
         } else {
           fullData = this.parseServerData(newData.temps);
         }
-        console.log(fullData);
         this.setState({data: fullData});
 
       }.bind(this),
@@ -42,7 +41,7 @@ var GraphBox = React.createClass({
     $(document).on('FridgeApp::UpdateDateRange', function(e) {
       self.loadDataFromServer(e.dateParams);
     });
-    // setInterval(this.pollServerForNewest, this.props.pollInterval);
+    setInterval(this.pollServerForNewest, this.props.pollInterval);
   },
   render: function() {
     return (

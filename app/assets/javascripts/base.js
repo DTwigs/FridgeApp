@@ -74,22 +74,32 @@ fridgeApp.interval.getTemps = function(date, temperatures) {
   fridgeApp.interval.list = [];
   fridgeApp.interval.temperatures = temperatures;
   fridgeApp.interval.createArray(date);
-  fridgeApp.interval.addTemperatures(fridgeApp.interval.list);
+  fridgeApp.interval.addTemperatures();
   return fridgeApp.interval.list;
 }
 
 fridgeApp.interval.createArray = function(date) {
   var startDate = moment(date).startOf('day'),
-    endDate = moment(date).endOf('day'),
-    TIME_INTERVAL = fridgeApp.interval.TIME_INTERVAL;
+    endDate = moment(date).endOf('day');
 
+  // if end date is in the future, set it to the current time
   if (endDate > moment()) {
     endDate = moment().add(1, 'm');
   }
 
+  return fridgeApp.interval.addTimeGaps(startDate, endDate);
+}
+
+// Add a time gape for every 10 minute interval in time between
+// the start and end date
+fridgeApp.interval.addTimeGaps = function(startDate, endDate) {
+  var TIME_INTERVAL = fridgeApp.interval.TIME_INTERVAL;
+
   while (startDate < endDate) {
     startDate.add(TIME_INTERVAL, 'm');
 
+    // add a time gap for every interval in the list
+    // this time gap will get replaced with data in #addTemperatures if a temperature exists
     fridgeApp.interval.list.push(
       {
         interval: startDate.format("YYYY-MM-DD h:mm:ss a"),
@@ -101,6 +111,20 @@ fridgeApp.interval.createArray = function(date) {
   return fridgeApp.interval.list;
 }
 
+// This method is used for appending new time gaps to the end of an
+// existing list of intervals
+fridgeApp.interval.addNewTimeIntervals = function(date, currentData) {
+  var intervals = currentData[date],
+    lastInterval = intervals[intervals.length - 1],
+    startDate = moment(lastInterval.interval),
+    endDate = moment().add(1, 'm');
+
+  fridgeApp.interval.list = intervals;
+
+  return fridgeApp.interval.addTimeGaps(startDate, endDate);
+}
+
+// Find and Add a temperature to each time interval in the array
 fridgeApp.interval.addTemperatures = function() {
   var objs = fridgeApp.interval.list,
     temp;
@@ -118,6 +142,7 @@ fridgeApp.interval.addTemperatures = function() {
   fridgeApp.interval.list = objs;
 }
 
+// Find a temperature that fits in the interval block
 fridgeApp.interval.findTemperatures = function(intervalObj) {
   var temps = fridgeApp.interval.temperatures,
     chosenTemp = false,
@@ -138,14 +163,16 @@ fridgeApp.interval.findTemperatures = function(intervalObj) {
   return chosenTemp;
 }
 
-// fridgeApp.appendNewData = function(newData, currentData) {
-//   var key = newData["temps"];
+fridgeApp.appendNewData = function(newData, currentData) {
+  for (var key in newData["temps"]) {
+    fridgeApp.interval.temperatures = newData["temps"][key];
+    if (currentData.hasOwnProperty(key)) {
+      fridgeApp.interval.addNewTimeIntervals(key, currentData);
+      fridgeApp.interval.addTemperatures();
+    } else {
+      fridgeApp.interval.getTemps(key, newData["temps"][key]);
+    }
+  }
 
-//   for (var key in newData["temps"]) {
-//     if (currentData.hasOwnProperty(key)) {
-//       currentData[key]
-//     }
-//   }
-
-//   return currentData;
-// }
+  return currentData;
+}
