@@ -38,7 +38,7 @@ describe TempChecker do
         tc = TempChecker.new(message)
         allow_any_instance_of(Message).to receive(:send_text_message) {true}
         tc.perform
-        expect(message.body).to eq("Not enough data in your database")
+        expect(message.body).to eq("Missing Data")
       end
     end
   end

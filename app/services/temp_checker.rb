@@ -11,7 +11,7 @@ class TempChecker
         @message.send_text_message
       end
     else
-      @message.body = "Not enough data in your database"
+      @message.body = "Missing Data"
       @message.send_text_message
     end
   end
