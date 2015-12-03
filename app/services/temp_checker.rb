@@ -11,7 +11,7 @@ class TempChecker
         @message.send_text_message
       end
     else
-      @message.body = "Missing Data"
+      @message.body = "No temperature reading in the last 30 minutes"
       @message.send_text_message
     end
   end
