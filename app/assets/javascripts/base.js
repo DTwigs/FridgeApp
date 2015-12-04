@@ -37,10 +37,12 @@ fridgeApp.bindEvents = function() {
     });
 
     $('.js-change-filter').on('click', function(e) {
+      $('.temperature-list').removeClass('has-bar-toggled');
       $('.overlay-filters').addClass('is-visible');
     });
 
     $('.js-filter-submit, .overlay-filters-close').on('click', function(e) {
+
       $('.overlay-filters').removeClass('is-visible');
     });
   });
