@@ -1,5 +1,20 @@
 var fridgeApp = {};
 
+fridgeApp.indicateCurrentTime = function() {
+  $(document).ready(function() {
+    var minutes = moment.duration(moment()).asMinutes(),
+      intervals = Math.ceil(minutes / 10);
+
+      $('.timeline-item').removeClass('is-current-time');
+
+      timelineItem = $('.timeline-item:nth-child(' + intervals + ')')
+      timelineItem
+        .addClass('is-current-time')
+        .html("<div class='timeline-item-clock'>" + moment().format('h:mm a') + "</div>");
+  });
+
+}
+
 fridgeApp.bindEvents = function() {
   $(document).ready(function() {
     $('.toggle-button-text').on('click', function(e) {
@@ -29,6 +44,7 @@ fridgeApp.bindEvents = function() {
       $('.overlay-filters').removeClass('is-visible');
     });
   });
+  setInterval(this.indicateCurrentTime, 15000);
 }
 
 fridgeApp.getTemperatureItemClass = function(temperature) {

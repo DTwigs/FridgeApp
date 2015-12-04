@@ -25,6 +25,25 @@
   &:nth-child(72n+0) {
     height: 50px;
   }
+
+  &.is-current-time {
+    position: relative;
+    background-color: $color-tertiary-9;
+    opacity: .8;
+
+    .timeline-item-clock { display: block; }
+  }
+
+  .timeline-item-clock {
+    display: none;
+    position: absolute;
+    bottom: -14px;
+    left: -22px;
+    width: 50px;
+    color: $color-black;
+    font-size: 1rem;
+    text-align: center;
+  }
 }
 
 .timeline-position {
