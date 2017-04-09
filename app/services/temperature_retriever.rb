@@ -1,21 +1,19 @@
 class TemperatureRetriever
 
   def initialize(start_date, end_date)
-    if start_date.present? && start_date.is_a?(String)
-      @start_date = DateTime.parse(start_date)
-    else
-      @start_date = start_date
-    end
-
-    if end_date.present? && end_date.is_a?(String)
-      @end_date = DateTime.parse(end_date)
-    else
-      @end_date = end_date.is_a?(DateTime) ? end_date : DateTime.now
-    end
-
-    @start_date = set_pacific_time(@start_date)
-    @end_date = set_pacific_time(@end_date) if @end_date.present?
+    @start_date = verify_and_parse_date(start_date)
+    @end_date = verify_and_parse_date(end_date)
   end
+
+  def verify_and_parse_date(date)
+    if date.present? && date.is_a?(String)
+      DateTime.parse(date)
+    elsif date.is_a?(DateTime)
+      date
+    else
+      DateTime.now
+    end
+  end 
 
   def get_temps
     temps = []
@@ -32,15 +30,12 @@ class TemperatureRetriever
     total_range = @start_date.beginning_of_day..@end_date.end_of_day
     total_range.each do |date|
       range = date.beginning_of_day..date.end_of_day
-      temps_found = []
-      temps.each do |temp|
+      temps_found = temps.map do |temp|
         if range.cover?(temp.created_at.to_datetime)
-          temps_found.push(temp)
+          temp
         end
-      end
+      end.compact
       key = date.strftime('%Y-%m-%d')
-      s = range.cover?(@start_date) ? @start_date : date.beginning_of_day
-      e = range.cover?(@end_date) ? @end_date : date.end_of_day
       temps_by_day[key] = temps_found
     end
     temps_by_day
@@ -50,10 +45,5 @@ class TemperatureRetriever
     ((time2 - time1) / 60).to_i
   end
 
-  private
-
-  def set_pacific_time(date)
-    date.change(offset: "-800")
-  end
 end
 
