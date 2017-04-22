@@ -17,7 +17,7 @@ class TempChecker
   end
 
   def grab_temps
-    temperatures = Temperature.where("created_at >= ?", (DateTime.now - 30.minutes))
+    Temperature.where("created_at >= ?", (DateTime.now - 30.minutes))
   end
 
   def check_temps(temperatures)
