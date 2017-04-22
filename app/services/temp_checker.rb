@@ -4,9 +4,9 @@ class TempChecker
   end
 
   def perform
-    data = grab_temps
-    if data.count > 0
-      if check_temps(data)
+    temps = grab_temps
+    if temps.count > 0
+      if check_temps(temps)
         @message.body = "Temperature is too high"
         @message.send_text_message
       end
@@ -17,7 +17,7 @@ class TempChecker
   end
 
   def grab_temps
-    temperatures = Temperature.where("created_at >= ?", (DateTime.now - 30.minutes))
+    Temperature.where("created_at >= ?", (DateTime.now - 30.minutes))
   end
 
   def check_temps(temperatures)
