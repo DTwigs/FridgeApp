@@ -10,7 +10,7 @@ describe Api::TemperatureController do
     end
 
     it 'shows a list of temperatures for a timespan' do
-      get :index, :start_date => "2015-10-05 01:30", :end_date => "2015-10-05 03:18"
+      get :index, params: { start_date: "2015-10-05 01:30", end_date: "2015-10-05 03:18" }
 
       expect(response).to be_success
       j = JSON.parse(response.body) #response.body is the json that returned from the controller
@@ -18,7 +18,7 @@ describe Api::TemperatureController do
     end
 
     it 'shows a list of temperatures for a timespan' do
-      get :index, :start_date => "2015-10-05 01:30"
+      get :index, params: { start_date: "2015-10-05 01:30" }
 
       expect(response).to be_success
       j = JSON.parse(response.body) #response.body is the json that returned from the controller
@@ -32,14 +32,14 @@ describe Api::TemperatureController do
     end
 
     it 'returns error if invalid start date' do
-      get :index, :start_date => "A Date", :end_date => "2015-10-05 03:18"
+      get :index, params: { start_date: "A Date", end_date: "2015-10-05 03:18" }
 
       e = JSON.parse(response.body)
       expect(e).to eql({"success" => false, "error" => "invalid date", "status" => "forbidden"})
     end
 
     it 'returns error if invalid start date' do
-      get :index, :start_date => "2015-10-05 03:18", :end_date => "End Date"
+      get :index, params: { start_date: "2015-10-05 03:18", end_date: "End Date" }
 
       e = JSON.parse(response.body)
       expect(e).to eql({"success" => false, "error" => "invalid date", "status" => "forbidden"})

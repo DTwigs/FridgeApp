@@ -1,16 +1,15 @@
 source 'https://rubygems.org'
-ruby "2.2.3"
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.4'
+gem 'rails', '5.2.0'
 gem 'pg'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails'
-gem 'react-rails', '~> 1.4.1'
+gem 'react-rails', '~> 2.4.4'
 gem 'compass'
 gem 'compass-rails'
 gem 'breakpoint' # must be listed AFTER compass
@@ -40,11 +39,15 @@ gem 'pry-stack_explorer', require: false
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# Reduces boot times through caching; required in config/boot.rb
+gem 'bootsnap', '>= 1.1.0', require: false
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   gem 'rspec-rails'
   gem 'dotenv-rails'
+  gem 'listen'
 end
 
 group :development do
