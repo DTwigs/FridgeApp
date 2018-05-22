@@ -1,8 +1,12 @@
 class MainController < ApplicationController
   def index
-    start_date = 4.days.ago.beginning_of_day.to_datetime
-    temp_ret = TemperatureRetriever.new(start_date, nil)
-    @temps = temp_ret.get_temps.to_json
+    retriever_object = TemperatureRetriever.new(start_date, nil)
+    @temps = retriever_object.get_temps.to_json
   end
 
+  private
+
+  def start_date
+  	4.days.ago.beginning_of_day.to_datetime
+  end
 end
